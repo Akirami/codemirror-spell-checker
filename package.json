@@ -13,7 +13,7 @@
     "spellchecking",
     "javascript"
   ],
-  "homepage": "https://github.com/NextStepWebs/codemirror-spell-checker",
+  "homepage": "https://github.com/inkdropapp/codemirror-spell-checker/tree/inkdrop",
   "main": "./src/js/spell-checker.js",
   "license": "MIT",
   "company": "Next Step Webs, Inc.",
@@ -22,7 +22,7 @@
     "url": "http://www.WesCossick.com"
   },
   "bugs": {
-    "url": "https://github.com/NextStepWebs/codemirror-spell-checker/issues"
+    "url": "https://github.com/inkdropapp/codemirror-spell-checker/issues"
   },
   "dependencies": {
     "typo-js": "*"
@@ -45,6 +45,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NextStepWebs/codemirror-spell-checker"
+    "url": "https://github.com/inkdropapp/codemirror-spell-checker"
   }
 }
