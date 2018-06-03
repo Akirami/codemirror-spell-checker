@@ -35,6 +35,7 @@ CodeMirrorSpellChecker({
 CodeMirror.fromTextArea(document.getElementById("textarea"), {
 	mode: "spell-checker",
 	backdrop: "gfm" // Your desired mode
+	language: "en_US" // Optionall specify a different language
 });
 ```
 
@@ -48,3 +49,7 @@ You can customize the misspelled word appearance by updating the CSS. All misspe
 	/* Your styling here */
 }
 ```
+
+## Languages
+
+The package ships with *en_US* by default.
