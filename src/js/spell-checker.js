@@ -4,6 +4,7 @@
 
 // Requires
 var Typo = require("typo-js");
+var fs = require("fs");
 
 // Check if the string is in alphabets
 // Borrowed from: https://stackoverflow.com/a/17056233/1217590
@@ -34,26 +35,28 @@ function CodeMirrorSpellChecker(options) {
 		};
 	}
 
+	var loadRemoteDic = function(type) {
+		return function() {
+			if(this.readyState === 4 && this.status === 200) {
+				CodeMirrorSpellChecker[type] = this.responseText;
+				CodeMirrorSpellChecker.num_loaded++;
 
-	// Define the new mode
-	options.codeMirrorInstance.defineMode("spell-checker", function(config) {
+				if(CodeMirrorSpellChecker.num_loaded == 2) {
+					CodeMirrorSpellChecker.typo = new Typo(language, CodeMirrorSpellChecker.aff_data, CodeMirrorSpellChecker.dic_data, {
+						platform: "any"
+					});
+				}
+			}
+		};
+	};
+
+	var loadRemote = function() {
 		// Load AFF/DIC data
 		if(!CodeMirrorSpellChecker.aff_loading) {
 			CodeMirrorSpellChecker.aff_loading = true;
 			var xhr_aff = new XMLHttpRequest();
 			xhr_aff.open("GET", "https://cdn.jsdelivr.net/codemirror.spell-checker/latest/" + language + ".aff", true);
-			xhr_aff.onload = function() {
-				if(xhr_aff.readyState === 4 && xhr_aff.status === 200) {
-					CodeMirrorSpellChecker.aff_data = xhr_aff.responseText;
-					CodeMirrorSpellChecker.num_loaded++;
-
-					if(CodeMirrorSpellChecker.num_loaded == 2) {
-						CodeMirrorSpellChecker.typo = new Typo(language, CodeMirrorSpellChecker.aff_data, CodeMirrorSpellChecker.dic_data, {
-							platform: "any"
-						});
-					}
-				}
-			};
+			xhr_aff.onload = loadRemoteDic("aff_data");
 			xhr_aff.send(null);
 		}
 
@@ -61,21 +64,29 @@ function CodeMirrorSpellChecker(options) {
 			CodeMirrorSpellChecker.dic_loading = true;
 			var xhr_dic = new XMLHttpRequest();
 			xhr_dic.open("GET", "https://cdn.jsdelivr.net/codemirror.spell-checker/latest/" + language + ".dic", true);
-			xhr_dic.onload = function() {
-				if(xhr_dic.readyState === 4 && xhr_dic.status === 200) {
-					CodeMirrorSpellChecker.dic_data = xhr_dic.responseText;
-					CodeMirrorSpellChecker.num_loaded++;
-
-					if(CodeMirrorSpellChecker.num_loaded == 2) {
-						CodeMirrorSpellChecker.typo = new Typo(language, CodeMirrorSpellChecker.aff_data, CodeMirrorSpellChecker.dic_data, {
-							platform: "any"
-						});
-					}
-				}
-			};
+			xhr_dic.onload = loadRemoteDic("dic_data");
 			xhr_dic.send(null);
 		}
+	};
 
+	var loadLocal = function() {
+		CodeMirrorSpellChecker.aff_data = fs.readFileSync(spellPath + "/" + language + ".aff", { encoding: "utf8" });
+		CodeMirrorSpellChecker.dic_data = fs.readFileSync(spellPath + "/" + language + ".dic", { encoding: "utf8" });
+
+		CodeMirrorSpellChecker.typo = new Typo(language, CodeMirrorSpellChecker.aff_data, CodeMirrorSpellChecker.dic_data, {
+			platform: "any"
+		});
+	};
+
+	// Define the new mode
+	options.codeMirrorInstance.defineMode("spell-checker", function(config) {
+
+		if (CodeMirrorSpellChecker.languages.includes(language)) {
+			loadLocal();
+		}
+		else {
+			loadRemote();
+		}
 
 		// Create the overlay and such
 		var overlay = {
@@ -122,6 +133,17 @@ CodeMirrorSpellChecker.dic_loading = false;
 CodeMirrorSpellChecker.aff_data = "";
 CodeMirrorSpellChecker.dic_data = "";
 CodeMirrorSpellChecker.typo;
+CodeMirrorSpellChecker.languages = [];
+var spellPath = "/usr/share/hunspell";
+if (fs.existsSync(spellPath)) {
+	var items = fs.readdirSync(spellPath);
+	for (var i=0; i < items.length; i++) {
+		var md = items[i].match(/^(.*).aff$/);
+		if (md) {
+			CodeMirrorSpellChecker.languages.push(md[1]);
+		}
+	}
+}
 
 
 // Export

@@ -52,4 +52,10 @@ You can customize the misspelled word appearance by updating the CSS. All misspe
 
 ## Languages
 
-The package ships with *en_US* by default.
+The package ships with *en_US* by default. On Ubuntu systems it will check for
+the dictionaries in */usr/share/hunspell/*. You can install new languages by
+using
+
+```
+sudo apt-get install myspell-en-au
+```
