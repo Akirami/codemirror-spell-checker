@@ -1,6 +1,6 @@
 {
-  "name": "codemirror-spell-checker-inkdrop",
-  "version": "1.2.0",
+  "name": "codemirror-spell-checker-akirami",
+  "version": "1.2.1",
   "description": "Dead-simple spell checking in CodeMirror.",
   "keywords": [
     "codemirror",
