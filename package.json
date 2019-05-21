@@ -13,6 +13,10 @@
     "spellchecking",
     "javascript"
   ],
+  "scripts": {
+    "gulp": "gulp --fix",
+    "minify": "gulp minify"
+  },
   "homepage": "https://github.com/inkdropapp/codemirror-spell-checker/tree/inkdrop",
   "main": "./src/js/spell-checker.js",
   "license": "MIT",
@@ -31,17 +35,17 @@
     "browserify": "*",
     "debug": "*",
     "eslint": "*",
-    "gulp": "*",
+    "gulp": "^3.0",
     "gulp-concat": "*",
-    "gulp-debug": "*",
-    "gulp-eslint": "*",
-    "gulp-header": "*",
+    "gulp-debug": "^3.0",
+    "gulp-eslint": "4.0.2",
+    "gulp-header": "^1.8.12",
     "gulp-jsbeautifier": "*",
-    "gulp-clean-css": "*",
-    "gulp-rename": "*",
+    "gulp-clean-css": "^3.1.0",
+    "gulp-rename": "1.4.0",
     "gulp-uglify": "*",
     "vinyl-source-stream": "*",
-    "vinyl-buffer": "*"
+    "vinyl-buffer": "1.0.1"
   },
   "repository": {
     "type": "git",
