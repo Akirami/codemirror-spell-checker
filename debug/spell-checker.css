@@ -1,0 +1,9 @@
+/**
+ * codemirror-spell-checker v1.2.1
+ * Copyright Next Step Webs, Inc.
+ * @link https://github.com/inkdropapp/codemirror-spell-checker/tree/inkdrop
+ * @license MIT
+ */
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: rgba(255, 0, 0, .15);
+}
