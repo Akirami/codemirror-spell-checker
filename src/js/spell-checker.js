@@ -1,4 +1,4 @@
-// Use strict mode (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)
+se strict mode (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)
 "use strict";
 
 
@@ -34,11 +34,10 @@ function CodeMirrorSpellChecker(options) {
 			CodeMirrorSpellChecker.aff_loading = true;
 			var xhr_aff = new XMLHttpRequest();
 			var affUrl;
-			if(options.customDict===undefined){
-				affUrl="https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.aff";
-			}
-			else{
-				affUrl=options.customDict.aff;
+			if(options.customDict === undefined) {
+				affUrl = "https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.aff";
+			} else {
+				affUrl = options.customDict.aff;
 			}
 			xhr_aff.open("GET", affUrl, true);
 			xhr_aff.onload = function() {
@@ -60,11 +59,10 @@ function CodeMirrorSpellChecker(options) {
 			CodeMirrorSpellChecker.dic_loading = true;
 			var xhr_dic = new XMLHttpRequest();
 			var dicUrl;
-			if(options.customDict===undefined){
-				dicUrl="https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.dic";
-			}
-			else{
-				dicUrl=options.customDict.dic;
+			if(options.customDict === undefined) {
+				dicUrl = "https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.dic";
+			} else {
+				dicUrl = options.customDict.dic;
 			}
 			xhr_dic.open("GET", dicUrl, true);
 			xhr_dic.onload = function() {
@@ -79,22 +77,22 @@ function CodeMirrorSpellChecker(options) {
 					}
 				}
 			};
-			xhr_dic.addEventListener('progress',function(){
-				if(xhr_dic.status === 200){
-					let sommaireWrapper = document.getElementById('sommaireWrapper')
-				    if (sommaireWrapper) {
-					    sommaireWrapper.style.display = 'block'
+			xhr_dic.addEventListener("progress", function() {
+				if(xhr_dic.status === 200) {
+					var sommaireWrapper = document.getElementById("sommaireWrapper");
+					if(sommaireWrapper) {
+						sommaireWrapper.style.display = "block";
 					}
 				}
-			},false) 
-			xhr_dic.addEventListener('load',function(){
-				if(xhr_dic.status === 200){
-					let sommaireWrapper = document.getElementById('sommaireWrapper')
-				    if (sommaireWrapper) {
-					    sommaireWrapper.style.display = 'none'
+			}, false);
+			xhr_dic.addEventListener("load", function() {
+				if(xhr_dic.status === 200) {
+					var sommaireWrapper = document.getElementById("sommaireWrapper");
+					if(sommaireWrapper) {
+						sommaireWrapper.style.display = "none";
 					}
 				}
-			},false) 
+			}, false);
 			xhr_dic.send(null);
 		}
 
@@ -106,16 +104,16 @@ function CodeMirrorSpellChecker(options) {
 		var rx_ignore = /^[0-9]+$/;
 
 		// Get array of custom words
- 		var customWords;
- 		if(options.customWords && options.customWords instanceof Array) {
- 			customWords = options.customWords || [];
- 		}
+		var customWords;
+		if(options.customWords && options.customWords instanceof Array) {
+			customWords = options.customWords || [];
+		}
 
 		// Create the overlay and such
 		var overlay = {
 			token: function(stream) {
 				var isCodeBlock = stream.lineOracle.state.base.overlay.codeBlock;
-				if (options.ignoreCodeBlocks && isCodeBlock) {
+				if(options.ignoreCodeBlocks && isCodeBlock) {
 					stream.next();
 					return null;
 				}
