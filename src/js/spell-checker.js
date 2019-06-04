@@ -1,6 +1,5 @@
 "use strict";
 
-
 // Requires
 var Typo = require("typo-js");
 
